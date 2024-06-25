@@ -1,0 +1,22 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amogh545/summerinternship_blcokchain_proj.git"
+  },
+  "author": "amogh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amogh545/summerinternship_blcokchain_proj/issues"
+  },
+  "homepage": "https://github.com/amogh545/summerinternship_blcokchain_proj#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
