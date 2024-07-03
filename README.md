@@ -1,2 +1,1 @@
-# summerinternship_blockchain_proj
-implementing a simple blockchain network
+Block chain project as my summer internship 
