@@ -1,5 +1,7 @@
 const express =require('express') ;
 const creationroute = require ('./routes/eventcreater');
+const functcaller= require('./routes/functioncaller');
+const getdeets=require('./routes/getdetails');
 require("dotenv").config();
 
 const app =express();
@@ -13,6 +15,8 @@ app.post('/', (req,res,next) =>{
 
 
 app.use('/r',creationroute) ;
+app.use('/r',functcaller) ;
+app.use('/r',getdeets);
 
 
 
