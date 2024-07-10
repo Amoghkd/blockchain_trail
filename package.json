@@ -9,15 +9,22 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.6",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.5"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
+    "ethers": "^6.13.1",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
+    "fs": "^0.0.1-security",
+    "hdwalletprovider": "^1.7.0",
+    "node-localstorage": "^3.0.5",
     "nodemon": "^3.1.4",
-    "solc": "^0.8.26"
+    "path": "^0.12.7",
+    "solc": "^0.8.26",
+    "web3": "^4.10.0"
   }
 }
