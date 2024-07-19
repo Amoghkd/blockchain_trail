@@ -1,22 +1,32 @@
 {
-  "name": "express",
+  "name": "hardhat",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/amogh545/summerinternship_blcokchain_proj.git"
-  },
-  "author": "amogh",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/amogh545/summerinternship_blcokchain_proj/issues"
-  },
-  "homepage": "https://github.com/amogh545/summerinternship_blcokchain_proj#readme",
   "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.6",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.5"
+  },
   "dependencies": {
-    "express": "^4.19.2"
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
+    "fs": "^0.0.1-security",
+    "hdwalletprovider": "^1.7.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.10.2",
+    "node-localstorage": "^3.0.5",
+    "nodemon": "^3.1.4",
+    "path": "^0.12.7",
+    "solc": "^0.8.26",
+    "web3": "^4.10.0"
   }
 }
