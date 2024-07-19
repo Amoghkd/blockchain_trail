@@ -16,37 +16,33 @@ const callFunction = async (req, res) => {
   const functionName=req.body.functionName ;
   const functionParams=req.body.params ; // an array of params
   console.log('the function params are',functionParams) ;
+ 
+ try {
+  // getiing abi and contract address from db 
+  const { abi, contract_address } = await getContractDetails('secondcontract');
+    
+    let ABI;
+    try {
+      ABI = abi; // Parse ABI from JSON string
+    } catch (e) {
+      console.error('Error parsing ABI:', e);
+      return res.status(500).send({ message: 'Error parsing ABI from the database' });
+    }
 
-// //getting abi and contract address from local storage 
-  // if (typeof localStorage === "undefined" || localStorage === null) {
-  //   var LocalStorage = require('node-localstorage').LocalStorage;
-  //   localStorage = new LocalStorage('./scratch');
-  // }
- // const jsonString = localStorage.getItem('secondcontractABI');
- // if (jsonString) {
-  //   var ABI = JSON.parse(jsonString);
-  //   console.log('JSON data retrieved from localStorage:', ABI);
-  // } else {
-  //   console.log('No JSON data found in localStorage.');
-  //   return res.status(500).send({ message: "No JSON data found in localStorage." });
-  // }
-  // const contractAddress = localStorage.getItem('addressofcont');
-  // if (!contractAddress) {
-  //   console.log('No contract address found in localStorage.');
-  //   return res.status(500).send({ message: "No contract address found in localStorage." });
-  // }
-  // console.log("the contract address from local storage is ", contractAddress);
+    console.log('ABI retrieved from database:', ABI);
+    console.log('Contract address retrieved from database:', contract_address);
 
-  const contract = new ethers.Contract(contractAddress, ABI, provider);
+    //connecting to blockchain 
+  const contract = new ethers.Contract(contract_address, ABI, provider);
   const signedContract = contract.connect(wallet);
-
-  try {
-     //checking if fucntion exists in abi 
+     
+  //checking if fucntion exists in abi 
   const functionAbi=ABI.find(item => item.name ===functionName && item.type=== 'function') ;
   if(!functionAbi) {
     throw new Error(`fucntion ${functionName} not found in abi`) ;
   }
- //check for the number of parameters 
+ 
+  //check for the number of parameters 
  const expectedParmasCount=functionAbi.inputs.length ;
  if(functionParams.length !== expectedParmasCount){
   throw new Error(`Function ${functionName} expects ${expectedParmasCount} parameters,but ${functionParams.length} were provided. `) ;
@@ -58,9 +54,13 @@ const callFunction = async (req, res) => {
     console.log("Function call confirmed:", txHash);
     console.log("waiting for transaction...");
     console.log("receipt hash:", receipt.hash);
+    
     // details of the func given to local storage 
-    localStorage.setItem('lastTxDetails', JSON.stringify({functionName,functionParams,txHash, receiptHash: receipt.hash }));
-    res.send({ message: "Function called successfully!", txHash, receiptHash: receipt.hash });
+    //localStorage.setItem('lastTxDetails', JSON.stringify({functionName,functionParams,txHash, receiptHash: receipt.hash }));
+    
+    
+         res.send({ message: "Function called successfully!", txHash, receiptHash: receipt.hash });
+  
   } catch (error) {
     console.error("Error calling function:", error);
     let errorMessage = "Error calling function";

@@ -179,24 +179,24 @@ console.log(temp) ;
     //   fs.writeFileSync(`${contractname},json`,data,);
 
 
-    if (typeof localStorage === "undefined" || localStorage === null) {
-        var LocalStorage = require('node-localstorage').LocalStorage;
-        localStorage = new LocalStorage('./scratch');
-      }
+    // if (typeof localStorage === "undefined" || localStorage === null) {
+    //     var LocalStorage = require('node-localstorage').LocalStorage;
+    //     localStorage = new LocalStorage('./scratch');
+    //   }
     
-    const jsonString = JSON.stringify(ABI);
-    var nameoffile = `${contractname}ABI`;
-    console.log('namoffile is',nameoffile) ;
-    localStorage.setItem(nameoffile, jsonString) ;
-    console.log('JSON data saved to localStorage!');
-    //console.log(localStorage.getItem('nameoffile'));
+    // const jsonString = JSON.stringify(ABI);
+    // var nameoffile = `${contractname}ABI`;
+    // console.log('namoffile is',nameoffile) ;
+    // localStorage.setItem(nameoffile, jsonString) ;
+    // console.log('JSON data saved to localStorage!');
+    // //console.log(localStorage.getItem('nameoffile'));
 
-    localStorage.setItem('addressofcont',address) ;
-    console.log('address saved to local storage ') ;
-    console.log('address from loc sorage' ,localStorage.getItem('addressofcont'));
+    // localStorage.setItem('addressofcont',address) ;
+    // console.log('address saved to local storage ') ;
+    // console.log('address from loc sorage' ,localStorage.getItem('addressofcont'));
 
     await storeContractDetails.StoreContractDetails(contractname, ABI, address); // Add this line to store contract details
-    console.log("contract details stored") ;
+    console.log("contract details stored in sql ") ;
 
   res.send({ message: "Contract deployed successfully!" });
   } catch (error) {
