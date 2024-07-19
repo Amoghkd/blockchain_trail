@@ -21,6 +21,8 @@
     "express-async-handler": "^1.2.0",
     "fs": "^0.0.1-security",
     "hdwalletprovider": "^1.7.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.10.2",
     "node-localstorage": "^3.0.5",
     "nodemon": "^3.1.4",
     "path": "^0.12.7",
