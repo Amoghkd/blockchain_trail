@@ -5,43 +5,113 @@ const ethers = require('ethers');
 const { TASK_CLEAN_GLOBAL } = require('hardhat/builtin-tasks/task-names');
 const { int } = require('hardhat/internal/core/params/argumentTypes');
 require('dotenv').config();
-const provider = ethers.getDefaultProvider("https://polygon-amoy.infura.io/v3/506618e4f7514c808ceea6d519e1c4df");
-const wallet = new ethers.Wallet("08eb99555889cf3e4d96a2a1e1c76ab01d848e9e396b2e3f9c4eba71c1ebf6be", provider);
+const storeContractDetails = require('../models/storeContractDetails'); // Add this line
+console.log('the id is',process.env.PRIVATEKEY) ;
+const privkey=process.env.PRIVATEKEY;
+const url=process.env.INFURA_URL ;
+const provider = ethers.getDefaultProvider(url);
+const wallet = new ethers.Wallet(privkey, provider);
+var mysql = require('mysql2');
 const account = wallet.address;
 console.log(wallet);
 
 const Ec = async (req, res, next) => {
   console.log("Creating new event");
-  console.log(req.body);
+  //console.log(req.body);
 
-  try {
+
+ try {
     const contractname = req.body.contractname;
-    const eventname = req.body.eventname;
-    const stringname = req.body.stringname;
-    const datatype =req.body.datatype ;
+    const data=req.body ;
+    //console.log(data);
+    
+      
+      var logger = [];
+      var arglogger1 = [] ;
+      var arglogger2 = [] ;
+      var event1=[] ;
+      for (let i = 0; i < data.events.length; i++) {
+        const event = data.events[i]; // Get the current event object
+        var j=0 ;
+        for (j = 0; j < event.arguments.length; j++) {
+          const arguments = event.arguments[j];
+             const combinedargforevent = `${solidize(arguments.input2)} ${arguments.input1}`;
+             const combinedardforfunc =`${solidize1(arguments.input2)}${arguments.input1}`;
+             const combinedardforemit =`_${arguments.input1}`;
+             
+             
+             logger.push(combinedargforevent);
+             arglogger1.push(combinedardforfunc);   
+             arglogger2.push(combinedardforemit);
+             
+              }
+              
+            event1[i]=eventcreater(event,logger,arglogger1,arglogger2) ; 
+           // console.log(event[i]);  
+            if(j==(event.arguments.length)){
+              logger = [];
+              arglogger1 = [] ;
+              arglogger2 = [] ;
+            } 
+       }
+    // console.log(logger);
+     //console.log(arglogger1);
+     //console.log(arglogger2);
+     console.log(event1.join('')) ; 
+    function eventcreater(event,arglogger,arglogger1,arglogger2){//called for each event 
+      
+        const eventname =event.eventName ;
+         var event ;
+         event=`event ${eventname}(${arglogger.toString()});
+  
+    function addEvent${eventname}(${arglogger1.toString()}) public {
+      emit ${eventname}(${arglogger2.toString()});
+    } ` ;
+      //console.log(event[index]);
+      return event ;
+       }  
+      
+     
+   // console.log(eventcreater(data,logger,arglogger1,arglogger2)) ;
+
+    // const stringname = req.body.stringname;
+    // const datatype =req.body.datatype ;
     //Contract_name = (`Contract+${EventLogger}`);
-console.log('the datatype is ',datatype) ;
+
+   
+
+function solidize1(datatype){
+    //console.log('the datatype is ',datatype) ;
     switch(datatype){
         case 'number' :
-            var actdatatype = 'uint256' ;
+            var actdatatype = 'uint256 _' ;
             break ;
         case 'string' :
-            var actdatatype ='string memory' ;
+            var actdatatype ='string memory _' ;
             break ;
     }
-    console.log('the datatype is ',actdatatype) ; 
-    //var actdatatype='string' ;
-
+   return actdatatype ;
+} 
+function solidize(datatype){
+  //console.log('the datatype is ',datatype) ;
+  switch(datatype){
+      case 'number' :
+          var actdatatype = 'uint256' ;
+          break ;
+      case 'string' :
+          var actdatatype ='string' ;
+          break ;
+  }
+ return actdatatype ;
+} 
+    
     const temp = `
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
 contract ${contractname} {
-  event ${eventname}(string ${stringname}, ${actdatatype} datatype);
+ ${event1.join('')}
 
-  function addEvent(string memory _${stringname}, ${actdatatype} _${datatype}) public {
-    emit ${eventname}(_${stringname}, _${datatype});
-  }
 }`;
 
 console.log(temp) ;
@@ -115,7 +185,7 @@ console.log(temp) ;
       }
     
     const jsonString = JSON.stringify(ABI);
-    var nameoffile = `${contractname}+'ABI'`;
+    var nameoffile = `${contractname}ABI`;
     console.log('namoffile is',nameoffile) ;
     localStorage.setItem(nameoffile, jsonString) ;
     console.log('JSON data saved to localStorage!');
@@ -125,6 +195,8 @@ console.log(temp) ;
     console.log('address saved to local storage ') ;
     console.log('address from loc sorage' ,localStorage.getItem('addressofcont'));
 
+    await storeContractDetails.StoreContractDetails(contractname, ABI, address); // Add this line to store contract details
+    console.log("contract details stored") ;
 
   res.send({ message: "Contract deployed successfully!" });
   } catch (error) {

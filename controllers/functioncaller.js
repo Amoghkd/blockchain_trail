@@ -2,45 +2,56 @@ const ethers = require('ethers');
 const fs = require('fs');
 require('dotenv').config();
 
-const provider = ethers.getDefaultProvider("https://polygon-amoy.infura.io/v3/506618e4f7514c808ceea6d519e1c4df");
-const wallet = new ethers.Wallet("08eb99555889cf3e4d96a2a1e1c76ab01d848e9e396b2e3f9c4eba71c1ebf6be", provider);
+const { getContractDetails} =require('../models/getdetailsbyname');
+const privkey=process.env.PRIVATEKEY;
+const url=process.env.INFURA_URL ;
+const provider = ethers.getDefaultProvider(url);
+const wallet = new ethers.Wallet(privkey, provider);
 const account = wallet.address;
 
 const callFunction = async (req, res) => {
   console.log("Calling function");
   console.log(req.body);
 
-  const param1 = req.body.stringname;
-  const param2 = req.body.datatype;
-  console.log('param2',param2);
+  const functionName=req.body.functionName ;
+  const functionParams=req.body.params ; // an array of params
+  console.log('the function params are',functionParams) ;
 
-  if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-  }
-
-  const jsonString = localStorage.getItem('nameoffile');
-
-  if (jsonString) {
-    var ABI = JSON.parse(jsonString);
-    console.log('JSON data retrieved from localStorage:', ABI);
-  } else {
-    console.log('No JSON data found in localStorage.');
-    return res.status(500).send({ message: "No JSON data found in localStorage." });
-  }
-
-  const contractAddress = localStorage.getItem('addressofcont');
-  if (!contractAddress) {
-    console.log('No contract address found in localStorage.');
-    return res.status(500).send({ message: "No contract address found in localStorage." });
-  }
-  console.log("the contract address from local storage is ", contractAddress);
+// //getting abi and contract address from local storage 
+  // if (typeof localStorage === "undefined" || localStorage === null) {
+  //   var LocalStorage = require('node-localstorage').LocalStorage;
+  //   localStorage = new LocalStorage('./scratch');
+  // }
+ // const jsonString = localStorage.getItem('secondcontractABI');
+ // if (jsonString) {
+  //   var ABI = JSON.parse(jsonString);
+  //   console.log('JSON data retrieved from localStorage:', ABI);
+  // } else {
+  //   console.log('No JSON data found in localStorage.');
+  //   return res.status(500).send({ message: "No JSON data found in localStorage." });
+  // }
+  // const contractAddress = localStorage.getItem('addressofcont');
+  // if (!contractAddress) {
+  //   console.log('No contract address found in localStorage.');
+  //   return res.status(500).send({ message: "No contract address found in localStorage." });
+  // }
+  // console.log("the contract address from local storage is ", contractAddress);
 
   const contract = new ethers.Contract(contractAddress, ABI, provider);
   const signedContract = contract.connect(wallet);
 
   try {
-    const tx = await signedContract.addEvent(param1, param2);
+     //checking if fucntion exists in abi 
+  const functionAbi=ABI.find(item => item.name ===functionName && item.type=== 'function') ;
+  if(!functionAbi) {
+    throw new Error(`fucntion ${functionName} not found in abi`) ;
+  }
+ //check for the number of parameters 
+ const expectedParmasCount=functionAbi.inputs.length ;
+ if(functionParams.length !== expectedParmasCount){
+  throw new Error(`Function ${functionName} expects ${expectedParmasCount} parameters,but ${functionParams.length} were provided. `) ;
+ }
+    const tx = await signedContract[functionName](...functionParams);//... is the spread operator in js -used to expand the array 
     const receipt = await tx.wait();
     const txHash = tx.hash;
     console.log("Function call confirmed:", tx);
@@ -48,7 +59,7 @@ const callFunction = async (req, res) => {
     console.log("waiting for transaction...");
     console.log("receipt hash:", receipt.hash);
     // details of the func given to local storage 
-    localStorage.setItem('lastTxDetails', JSON.stringify({ param1, param2, txHash, receiptHash: receipt.hash }));
+    localStorage.setItem('lastTxDetails', JSON.stringify({functionName,functionParams,txHash, receiptHash: receipt.hash }));
     res.send({ message: "Function called successfully!", txHash, receiptHash: receipt.hash });
   } catch (error) {
     console.error("Error calling function:", error);
