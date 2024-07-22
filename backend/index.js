@@ -9,17 +9,7 @@ const app =express();
 app.use(express.json());
 
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "amogh123"
-  });
-  
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-  
+
 
 app.use('/api',creationroute) ;
 app.use('/api',functcaller) ;

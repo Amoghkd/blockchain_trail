@@ -6,14 +6,14 @@ const { TASK_CLEAN_GLOBAL } = require('hardhat/builtin-tasks/task-names');
 const { int } = require('hardhat/internal/core/params/argumentTypes');
 require('dotenv').config();
 const storeContractDetails = require('../models/storeContractDetails'); // Add this line
-console.log('the id is',process.env.PRIVATEKEY) ;
+//console.log('the id is',process.env.PRIVATEKEY) ;
 const privkey=process.env.PRIVATEKEY;
 const url=process.env.INFURA_URL ;
 const provider = ethers.getDefaultProvider(url);
 const wallet = new ethers.Wallet(privkey, provider);
 var mysql = require('mysql2');
 const account = wallet.address;
-console.log(wallet);
+//console.log(wallet);
 
 const Ec = async (req, res, next) => {
   console.log("Creating new event");

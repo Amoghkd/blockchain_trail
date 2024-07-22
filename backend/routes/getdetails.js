@@ -1,10 +1,10 @@
 const express=require('express');
 const router =express.Router();
-const Gcontroller=require('../controllers/getdetails');
+const Gcontroller=require('../controllers/getfuncdetails');
 const FetchController=require('../controllers/fetch_all');
 const FetchbyfieldController=require('../controllers/getdetailsbyid');
 
-router.get('/funcparams',Gcontroller.getTransactionHistory);
+router.post('/funcparams',Gcontroller.getTransactionHistory);
 
 router.get('/fetchall',FetchController.fetchContractList);
 
