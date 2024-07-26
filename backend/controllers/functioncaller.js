@@ -12,14 +12,14 @@ const account = wallet.address;
 const callFunction = async (req, res) => {
   console.log("Calling function");
   console.log(req.body);
-
+  const contractName=req.body.contractName ;
   const functionName=req.body.functionName ;
   const functionParams=req.body.params ; // an array of params
   console.log('the function params are',functionParams) ;
  
  try {
   // getiing abi and contract address from db 
-  const { abi, contract_address } = await getContractDetails('secondcontract');
+  const { abi, contract_address } = await getContractDetails(contractName);
     
     let ABI;
     try {

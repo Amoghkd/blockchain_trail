@@ -4,11 +4,14 @@ const functcaller= require('./routes/functioncaller');
 const getdeets=require('./routes/getdetails');
 require("dotenv").config();
 const mysql=require('mysql2')
+const cors = require('cors');
+
+
 
 const app =express();
 app.use(express.json());
 
-
+app.use(cors());
 
 
 app.use('/api',creationroute) ;
