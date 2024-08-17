@@ -1,0 +1,40 @@
+.home-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .home-content{
+    top: 30%;
+    left: 17%;
+    position: absolute;
+    color: white;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 6rem;
+    font-weight: 800;
+
+  }
+
+  .bloglink{
+    position: absolute;;
+    border-radius: 2rem;
+    width: 10rem;
+    height: 4rem;
+    background-color: white;
+    top: 60%;
+    left: 43%;
+    transition: .8s ease;
+    color: black;
+    text-decoration: none;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+   .bloglink:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 100px 0px #f093f3;
+    transform: translate(0,-5px);
+transition: .8s ease;
+  }
