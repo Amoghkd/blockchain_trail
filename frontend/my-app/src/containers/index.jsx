@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/dashboard.css'; // Import the external stylesheet for non-Material UI components
-
+import { Link } from 'react-router-dom';
 const Dashboard = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +56,7 @@ const Dashboard = () => {
       toast.error('Error Creating Contract');
     } finally {
       setIsLoading(false);
-      Dashboard() ;
+     // Dashboard() ;
 
     }
   };
@@ -68,14 +68,15 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <div className="dashboard-logo">ContractR</div>
+      <Link to="/"><button className='dashboard-logo'>ContractR</button></Link>
+        {/* <div className="dashboard-logo" link to='/'>ContractR</div> */}
         <Button
           variant="contained"
           sx={{
-            backgroundColor: '#28a745',
+            backgroundColor: '#e6f0f',
             color: 'white',
             '&:hover': {
-              backgroundColor: '#218838',
+              backgroundColor: '#00f',
             },
             marginLeft: 'auto',
           }}

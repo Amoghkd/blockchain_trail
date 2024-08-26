@@ -5,25 +5,24 @@ const ethers = require('ethers');
 const { TASK_CLEAN_GLOBAL } = require('hardhat/builtin-tasks/task-names');
 const { int } = require('hardhat/internal/core/params/argumentTypes');
 require('dotenv').config();
-const storeContractDetails = require('../models/storeContractDetails'); // Add this line
-//console.log('the id is',process.env.PRIVATEKEY) ;
+const storeContractDetails = require('../models/storeContractDetails'); 
 const privkey=process.env.PRIVATEKEY;
 const url=process.env.INFURA_URL ;
 const provider = ethers.getDefaultProvider(url);
 const wallet = new ethers.Wallet(privkey, provider);
 var mysql = require('mysql2');
 const account = wallet.address;
-//console.log(wallet);
+
 
 const Ec = async (req, res, next) => {
   console.log("Creating new event");
-  //console.log(req.body);
+ 
 
 
  try {
     const contractname = req.body.contractname;
     const data=req.body ;
-    //console.log(data);
+    
     
       
       var logger = [];
@@ -58,7 +57,7 @@ const Ec = async (req, res, next) => {
      //console.log(arglogger1);
      //console.log(arglogger2);
      console.log(event1.join('')) ; 
-    function eventcreater(event,arglogger,arglogger1,arglogger2){//called for each event 
+function eventcreater(event,arglogger,arglogger1,arglogger2){//called for each event 
       
         const eventname =event.eventName ;
          var event ;
@@ -71,16 +70,7 @@ const Ec = async (req, res, next) => {
       return event ;
        }  
       
-     
-   // console.log(eventcreater(data,logger,arglogger1,arglogger2)) ;
-
-    // const stringname = req.body.stringname;
-    // const datatype =req.body.datatype ;
-    //Contract_name = (`Contract+${EventLogger}`);
-
-   
-
-function solidize1(datatype){
+function solidize1(datatype){  //to format the input to solidity argument format 
     //console.log('the datatype is ',datatype) ;
     switch(datatype){
         case 'number' :
@@ -157,44 +147,6 @@ console.log(temp) ;
     console.log("the abi is " ,ABI);
     // Use the deployed contract (optional)
     // You can call functions on the deployedContract object using its address and ABI
-    // const contract1 = new ethers.Contract(contractAddress, ABI, provider);
-    // const signedContract = contract.connect(wallet);
-
-    // (async () => {
-    //     try {
-    //       const tx = await signedContract.addEvent("some data", "number");
-    //       const receipt = await tx.wait();
-    //       const tx1=tx.hash ;
-    //       console.log("Function call confirmed:", tx);
-    //       console.log("Function call confirmed:", tx1.hash);
-    //       console.log("waiting for transaction...") ;
-    //       console.log("receipt hASH:", receipt.hash);
-    //     } catch (error) {
-    //       console.error("Error calling function:", error);
-    //     }
-    //   })();
-  //saving the file locally     
-    //   console.log(ABI);
-    //   const data=JSON.stringify(ABI,null,2);
-    //   fs.writeFileSync(`${contractname},json`,data,);
-
-
-    // if (typeof localStorage === "undefined" || localStorage === null) {
-    //     var LocalStorage = require('node-localstorage').LocalStorage;
-    //     localStorage = new LocalStorage('./scratch');
-    //   }
-    
-    // const jsonString = JSON.stringify(ABI);
-    // var nameoffile = `${contractname}ABI`;
-    // console.log('namoffile is',nameoffile) ;
-    // localStorage.setItem(nameoffile, jsonString) ;
-    // console.log('JSON data saved to localStorage!');
-    // //console.log(localStorage.getItem('nameoffile'));
-
-    // localStorage.setItem('addressofcont',address) ;
-    // console.log('address saved to local storage ') ;
-    // console.log('address from loc sorage' ,localStorage.getItem('addressofcont'));
-
     await storeContractDetails.StoreContractDetails(contractname, ABI, address); // Add this line to store contract details
     console.log("contract details stored in sql ") ;
 

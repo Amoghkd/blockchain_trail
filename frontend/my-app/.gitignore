@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *.mp4
+*.mov
+
+homevid.mov
