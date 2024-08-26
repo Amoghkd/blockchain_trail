@@ -1,0 +1,51 @@
+.modalBox {
+    padding: 16px;
+    background-color: white !important ;
+    margin: auto;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .textField {
+    border-color: lightblue !important;
+  }
+  
+  .textField:hover {
+    box-shadow: 0px 0px 5px 2px rgba(173, 216, 230, 0.5);
+  }
+  
+  .addEventButton,
+  .removeEventButton,
+  .addArgButton,
+  .removeArgButton,
+  .submitButton {
+    background-color: lightblue;
+    border-radius: 4px;
+  }
+  
+  .addEventButton:hover,
+  .removeEventButton:hover,
+  .addArgButton:hover,
+  .removeArgButton:hover,
+  .submitButton:hover {
+    background-color: darkblue;
+    color: white;
+  }
+  
+  .eventFieldContainer {
+    margin-bottom: 20px;
+  }
+  
+  .addArgButton {
+    background-color: transparent;
+    color: lightblue;
+    border: 2px solid lightblue;
+    border-radius: 50%;
+  }
+  
+  .addArgButton:hover {
+    background-color: lightblue;
+    color: white;
+  }
+  

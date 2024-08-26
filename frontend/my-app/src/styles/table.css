@@ -1,0 +1,36 @@
+/* TableComponent.css */
+.container {
+    background-image: url('prism.svg'); /* Replace with the correct path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+  }
+  
+  .input-group {
+    max-width: 300px;
+    margin-left: auto;
+  }
+  
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .input-group-text {
+    background-color: #f7f7f7;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f7f7f7;
+  }
+  
+  .button {
+    color: #00f;
+    background-color: #e6f0ff;
+    border-color: #e6f0ff;
+  }
+  

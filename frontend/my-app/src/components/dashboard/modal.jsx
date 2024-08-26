@@ -44,7 +44,16 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={{ p: 4, backgroundColor: 'white', margin: 'auto', width: 400, maxHeight: '80vh', overflowY: 'auto' }}>
+      <Box
+        sx={{
+          padding: '16px',
+          backgroundColor: 'white',
+          margin: 'auto',
+          width: '400px',
+          maxHeight: '80vh',
+          overflowY: 'auto'
+        }}
+      >
         {loading ? (
           <div style={{ textAlign: 'center' }}>
             <img src="https://i.imgur.com/llF5iyg.gif" alt="Mining..." width="100" />
@@ -58,6 +67,12 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
               fullWidth
               margin="normal"
               size="small"
+              sx={{
+                borderColor: 'lightblue',
+                '&:hover': {
+                  boxShadow: '0px 0px 5px 2px rgba(173, 216, 230, 0.5)',
+                },
+              }}
             />
             {eventFields.length === 0 && (
               <Button
@@ -65,10 +80,17 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                 onClick={() => appendEvent({ eventName: '', arguments: [{ input1: '', input2: 'string' }] })}
                 variant="contained"
                 color="secondary"
-                style={{ marginBottom: '20px' }}
                 size="small"
+                sx={{
+                  backgroundColor: 'lightblue',
+                  borderRadius: '0', // Rectangular shape
+                  '&:hover': {
+                    backgroundColor: 'darkblue',
+                    color: 'white',
+                  },
+                }}
               >
-                <AddCircleOutlineIcon /> Add Initial Event
+                <AddCircleOutlineIcon />
               </Button>
             )}
             {eventFields.map((eventItem, eventIndex) => (
@@ -80,6 +102,12 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                     fullWidth
                     margin="normal"
                     size="small"
+                    sx={{
+                      borderColor: 'lightblue',
+                      '&:hover': {
+                        boxShadow: '0px 0px 5px 2px rgba(173, 216, 230, 0.5)',
+                      },
+                    }}
                   />
                   <Button
                     type="button"
@@ -87,6 +115,14 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                     variant="contained"
                     color="secondary"
                     size="small"
+                    sx={{
+                      backgroundColor: 'lightblue',
+                      borderRadius: '0', // Rectangular shape
+                      '&:hover': {
+                        backgroundColor: 'darkblue',
+                        color: 'white',
+                      },
+                    }}
                   >
                     <AddCircleOutlineIcon />
                   </Button>
@@ -96,6 +132,14 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                     variant="contained"
                     color="error"
                     size="small"
+                    sx={{
+                      backgroundColor: 'lightblue',
+                      borderRadius: '0', // Rectangular shape
+                      '&:hover': {
+                        backgroundColor: 'darkblue',
+                        color: 'white',
+                      },
+                    }}
                   >
                     <CloseIcon />
                   </Button>
@@ -108,6 +152,12 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                       fullWidth
                       margin="normal"
                       size="small"
+                      sx={{
+                        borderColor: 'lightblue',
+                        '&:hover': {
+                          boxShadow: '0px 0px 5px 2px rgba(173, 216, 230, 0.5)',
+                        },
+                      }}
                     />
                     <TextField
                       {...register(`events.${eventIndex}.arguments.${argIndex}.input2`)}
@@ -119,6 +169,12 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                       fullWidth
                       margin="normal"
                       size="small"
+                      sx={{
+                        borderColor: 'lightblue',
+                        '&:hover': {
+                          boxShadow: '0px 0px 5px 2px rgba(173, 216, 230, 0.5)',
+                        },
+                      }}
                     >
                       <option value="string">String</option>
                       <option value="number">Number</option>
@@ -129,20 +185,36 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
                       variant="contained"
                       color="error"
                       size="small"
+                      sx={{
+                        backgroundColor: 'lightblue',
+                        borderRadius: '0', // Rectangular shape
+                        '&:hover': {
+                          backgroundColor: 'darkblue',
+                          color: 'white',
+                        },
+                      }}
                     >
                       <RemoveCircleOutlineIcon />
                     </Button>
+                    <Button
+                      type="button"
+                      onClick={() => handleAddArgument(eventIndex)}
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      sx={{
+                        backgroundColor: 'lightblue',
+                        borderRadius: '0', // Rectangular shape
+                        '&:hover': {
+                          backgroundColor: 'darkblue',
+                          color: 'white',
+                        },
+                      }}
+                    >
+                      <AddCircleOutlineIcon />
+                    </Button>
                   </Box>
                 ))}
-                <Button
-                  type="button"
-                  onClick={() => handleAddArgument(eventIndex)}
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                >
-                  <AddCircleOutlineIcon /> Add Argument
-                </Button>
               </div>
             ))}
             <Button
@@ -150,7 +222,14 @@ const ModalComponent = ({ open, handleClose, onSubmit, loading }) => {
               variant="contained"
               color="primary"
               size="small"
-              style={{ marginBottom: '20px' }}
+              sx={{
+                backgroundColor: 'lightblue',
+                borderRadius: '0', // Rectangular shape
+                '&:hover': {
+                  backgroundColor: 'darkblue',
+                  color: 'white',
+                },
+              }}
             >
               Submit
             </Button>
